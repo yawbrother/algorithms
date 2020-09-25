@@ -26,9 +26,10 @@ object Algorithms  extends App {
 
   def factorial(n: Int) = {
     @tailrec
-    def factorialHelper(n: Int, accu: Int): Int =
-      if(n <= 0 ) accu
-      else factorialHelper(n-1, n * accu)
+    def factorialHelper(n: Int, accu: Int): Int = n match {
+      case n if n <= 0 => accu
+      case _ => factorialHelper(n-1, n * accu)
+    }
 
     factorialHelper(n, 1)
   }
@@ -36,4 +37,20 @@ object Algorithms  extends App {
   println(factorial(4))
   println(factorial(10))
 
+  def fib(n: Int): Int = {
+    @tailrec
+    def go(n: Int, a: Int, b: Int): Int = n match {
+      case 0 => a
+      case _ => go(n-1, b, a + b)
+    }
+    go(n, 0, 1)
+  }
+
+  println(fib(4))
+
+  val fibonacci = for {
+    n <- List.range(1, 10)
+  } yield fib(n)
+
+  println(fibonacci)
 }
