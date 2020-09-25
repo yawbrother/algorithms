@@ -24,4 +24,16 @@ object Algorithms  extends App {
   println(binarySearch(testArray, 10,compare))
   println(binarySearch(testArray, -1,compare))
 
+  def factorial(n: Int) = {
+    @tailrec
+    def factorialHelper(n: Int, accu: Int): Int =
+      if(n <= 0 ) accu
+      else factorialHelper(n-1, n * accu)
+
+    factorialHelper(n, 1)
+  }
+
+  println(factorial(4))
+  println(factorial(10))
+
 }
