@@ -36,8 +36,10 @@ object Algorithms  extends App {
     factorialHelper(n, 1)
   }
 
-  println(factorial(4))
-  println(factorial(10))
+   println(for {
+    n  <- List.range(1, 11)
+  } yield factorial(n))
+
 
   //fibonacci
   def fib(n: Int): Int = {
@@ -52,7 +54,7 @@ object Algorithms  extends App {
   println(fib(4))
 
   val fibonacci = for {
-    n <- List.range(1, 10)
+    n <- List.range(1, 11)
   } yield fib(n)
 
   println(fibonacci)
