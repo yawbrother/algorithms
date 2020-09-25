@@ -2,6 +2,7 @@ import scala.annotation.tailrec
 
 object Algorithms  extends App {
 
+  //binary search
   def binarySearch[T](array: Array[T], item: T, greaterThan: (T, T) => Boolean): Boolean = {
     @tailrec
     def binarySearchRecursive[T](arr: Array[T], elem: T, low: Int, high: Int, grtThan: (T, T) => Boolean): Option[Int] = {
@@ -24,6 +25,7 @@ object Algorithms  extends App {
   println(binarySearch(testArray, 10,compare))
   println(binarySearch(testArray, -1,compare))
 
+  //factorial
   def factorial(n: Int) = {
     @tailrec
     def factorialHelper(n: Int, accu: Int): Int = n match {
@@ -37,6 +39,7 @@ object Algorithms  extends App {
   println(factorial(4))
   println(factorial(10))
 
+  //fibonacci
   def fib(n: Int): Int = {
     @tailrec
     def go(n: Int, a: Int, b: Int): Int = n match {
