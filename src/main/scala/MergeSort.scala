@@ -52,32 +52,49 @@ object MergeSort extends App {
   }
 
   def mergeSortTailRec2[T](comp: (T, T) => Boolean)(xs: List[T]) : List[T] = {
-    val n = xs.length / 2
+    @tailrec
+    def merge(ys: List[T], zs: List[T], acc: List[T] ): List[T] = (ys, zs) match {
+      case (Nil, ys) =>  acc ++ ys
+      case (zs, Nil) => acc ++ zs
+      case (y :: ys1, z :: zs1) => if (comp(y,z)) merge (ys1, zs, acc :+ y) else merge (ys, zs1, acc :+ z)
+    }
 
+    val n = xs.length / 2
     n match {
       case 0 => xs
-      case _ =>  xs match {
-        case Nil => xs
-        case x :: xs1 => {
-          @tailrec
-          def merge(ys: List[T], zs: List[T], acc: List[T] ): List[T] = (ys, zs) match {
-            case (Nil, ys) =>  acc ++ ys
-            case (zs, Nil) => acc ++ zs
-            case (y :: ys1, z :: zs1) => if (comp(y,z)) merge (ys1, zs, acc :+ y) else merge (ys, zs1, acc :+ z)
-          }
-
+      case _ =>  {
           val (left, right) = xs splitAt n
           merge (mergeSortTailRec2 (comp)(left), mergeSortTailRec2 (comp)(right), List())
-        }
       }
     }
   }
 
-  val myList = List(5,1,4,6,9,10,100,30)
+  def mergeSortTailRec3[T](comp: (T, T) => Boolean)(xs: List[T]) : List[T] = {
+    @tailrec
+    def merge(ys: List[T], zs: List[T], acc: List[T]): List[T] = (ys, zs) match {
+      case(_, Nil) => ys.reverse ::: acc
+      case(Nil, _) => zs.reverse ::: acc
+      case (y :: ys1, z :: zs1) => if (comp(y,z)) merge (ys1, zs, y :: acc) else merge (ys, zs1, z :: acc)
+
+    }
+
+    val n = xs.length / 2
+    n match {
+      case 0 => xs
+      case _ => {
+        val (ys, zs) = xs splitAt n
+        merge (mergeSortTailRec3 (comp)(ys), mergeSortTailRec3 (comp)(zs), List()).reverse
+      }
+    }
+  }
+
+
+  val myList = List(5,1,4,6,9,10,100,30, -1)
   println("raw list: " + myList)
   println("sorted - mergeSort: " + mergeSort(myList))
   println("sorted - mergeSortTailRec: " + mergeSortTailRec(myList))
   println("sorted - mergeSortTailRec2: " + mergeSortTailRec2((x: Int,y: Int) => x < y)(myList))
+  println("sorted - mergeSortTailRec3: " + mergeSortTailRec3((x: Int,y: Int) => x < y)(myList))
 
 
 }
