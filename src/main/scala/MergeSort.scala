@@ -28,18 +28,16 @@ object MergeSort extends App {
     }
   }
 
-  val myList = List(5,1,4,6,9,10,100,30)
-  println("raw list: " + myList)
-  println("sorted list: " + mergeSort(myList))
+
 
   def mergeSortTailRec[T <% Ordered[T]](zs: List[T]) : List[T] = {
     val n = zs.length / 2
 
     n match {
-      case 0 => zs
+      case 0  => zs
       case _ =>  zs match {
         case Nil => zs
-        case x :: xs => {
+        case z :: zs1 => {
           @tailrec
           def merge(xs: List[T], ys: List[T], acc: List[T] ): List[T] = (xs, ys) match {
             case (Nil, ys) =>  acc ++ ys
@@ -53,8 +51,6 @@ object MergeSort extends App {
     }
   }
 
-  println("sorted: " + mergeSortTailRec(myList))
-
   def mergeSortTailRec2[T](comp: (T, T) => Boolean)(xs: List[T]) : List[T] = {
     val n = xs.length / 2
 
@@ -62,12 +58,12 @@ object MergeSort extends App {
       case 0 => xs
       case _ =>  xs match {
         case Nil => xs
-        case x :: xs => {
+        case x :: xs1 => {
           @tailrec
           def merge(ys: List[T], zs: List[T], acc: List[T] ): List[T] = (ys, zs) match {
             case (Nil, ys) =>  acc ++ ys
             case (zs, Nil) => acc ++ zs
-            case (y :: ys1, z :: zs1) => if (comp(y,z)) merge (ys1, ys, acc :+ y) else merge (zs, zs1, acc :+ z)
+            case (y :: ys1, z :: zs1) => if (comp(y,z)) merge (ys1, zs, acc :+ y) else merge (ys, zs1, acc :+ z)
           }
 
           val (left, right) = xs splitAt n
@@ -77,7 +73,11 @@ object MergeSort extends App {
     }
   }
 
-  println("sorted: " + mergeSortTailRec2((x: Int,y: Int) => x < y)(myList))
+  val myList = List(5,1,4,6,9,10,100,30)
+  println("raw list: " + myList)
+  println("sorted - mergeSort: " + mergeSort(myList))
+  println("sorted - mergeSortTailRec: " + mergeSortTailRec(myList))
+  println("sorted - mergeSortTailRec2: " + mergeSortTailRec2((x: Int,y: Int) => x < y)(myList))
 
 
 }
