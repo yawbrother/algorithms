@@ -10,7 +10,6 @@ object BinarySearch  extends App {
       if (low > high) return None
 
       val mid = low + (high - low)/ 2
-      val midValue =  ar(mid)
       if (ar(mid) == elem) Some(mid)
       else if(cmp(ar(mid), elem)) binarySearch(ar, elem, low, high - 1)
       else binarySearch(ar, elem, mid + 1, high)
