@@ -1,10 +1,12 @@
+package com.gyesiama.algorithm
+
 import scala.annotation.tailrec
 
 object Fibonacci {
 
   def fibonacci(n: Int): Int = n match {
     case 0 | 1 => n
-    case _ => fibonacci(n -1) + fibonacci(n-2)
+    case _ => fibonacci(n - 1) + fibonacci(n - 2)
   }
 
   def fibonacciArr(n: Int): Int = {
@@ -12,11 +14,11 @@ object Fibonacci {
     n match {
       case 0 | 1 => n
       case _ => {
-        val arr = new Array[Int](n +1)
+        val arr = new Array[Int](n + 1)
         arr(0) = 0
         arr(1) = 1
-        for(i <- 2 to n) {
-          arr(i) = arr(i-1) + arr(i-2)
+        for (i <- 2 to n) {
+          arr(i) = arr(i - 1) + arr(i - 2)
         }
         arr(n)
       }
@@ -33,7 +35,7 @@ object Fibonacci {
         var fn2 = 0
         var fn1 = 1
         var res = 0
-        for(i <- 2 to n) {
+        for (i <- 2 to n) {
           res = fn1 + fn2
           fn2 = fn1
           fn1 = res
@@ -45,10 +47,11 @@ object Fibonacci {
 
   def fibonacciElegant(n: Int): Int = {
     @tailrec
-    def fibTail(n: Int, a: Int, b: Int) : Int = n match {
+    def fibTail(n: Int, a: Int, b: Int): Int = n match {
       case 0 => a
-      case _ => fibTail(n-1, b, a+b)
+      case _ => fibTail(n - 1, b, a + b)
     }
+
     fibTail(n, 0, 1)
   }
 
@@ -78,7 +81,11 @@ object Fibonacci {
     println("fib(6): " + fibonacciSeq(6))
     println("fib(6): " + fibonacciElegant(6))
 
+    val res = for {
+      n <- List.range(1, 11)
+    } yield fibonacciElegant(n)
 
+    println(res)
 
   }
 

@@ -1,19 +1,21 @@
+package com.gyesiama.algorithm
+
 object Karatsuba extends App {
 
-  def recIntMult(x: String, y: String) : String = {
-    def maxLength(a: String, b: String) = if(x.length < y.length) y.length else x.length
+  def recIntMult(x: String, y: String): String = {
+    def maxLength(a: String, b: String) = if (x.length < y.length) y.length else x.length
 
-    if(maxLength(x,y) == 1) (x.toLong * y.toLong).toString else {
-      val (a, b) = x.splitAt(x.length /2)
-      val (c, d) = y.splitAt(y.length /2)
+    if (maxLength(x, y) == 1) (x.toLong * y.toLong).toString else {
+      val (a, b) = x.splitAt(x.length / 2)
+      val (c, d) = y.splitAt(y.length / 2)
 
       val ac = recIntMult(a, c)
-      val ad = recIntMult(a,d)
+      val ad = recIntMult(a, d)
       val bc = recIntMult(b, c)
       val bd = recIntMult(b, d)
 
       (BigInt(ac) * BigInt("10").pow(x.length) +
-        (BigInt(ad) + BigInt(bc)) * BigInt("10").pow(x.length/2) +
+        (BigInt(ad) + BigInt(bc)) * BigInt("10").pow(x.length / 2) +
         BigInt(bd)).toString
     }
   }
